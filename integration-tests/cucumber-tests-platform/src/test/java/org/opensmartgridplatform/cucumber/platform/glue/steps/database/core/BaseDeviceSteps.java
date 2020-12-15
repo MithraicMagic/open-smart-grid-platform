@@ -49,13 +49,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 public abstract class BaseDeviceSteps {
 
     @Autowired
-    private CoreDeviceConfiguration configuration;
+    protected CoreDeviceConfiguration configuration;
 
     @Autowired
     private DeviceAuthorizationRepository deviceAuthorizationRepository;
 
     @Autowired
-    private DeviceModelRepository deviceModelRepository;
+    protected DeviceModelRepository deviceModelRepository;
 
     @Autowired
     private DeviceRepository deviceRepository;
@@ -101,11 +101,6 @@ public abstract class BaseDeviceSteps {
         final List<DeviceModel> deviceModels = this.deviceModelRepository.findByModelCode(
                 getString(settings, PlatformKeys.KEY_DEVICE_MODEL, PlatformDefaults.DEFAULT_DEVICE_MODEL_MODEL_CODE));
         final DeviceModel deviceModel = deviceModels.get(0);
-
-        if (settings.containsKey(PlatformKeys.DEVICEMODEL_METERED)) {
-            deviceModel.updateData(PlatformDefaults.DEFAULT_DEVICE_MODEL_DESCRIPTION, getBoolean(settings,
-                    PlatformKeys.DEVICEMODEL_METERED, PlatformDefaults.DEFAULT_DEVICE_MODEL_METERED));
-        }
 
         device.setDeviceModel(deviceModel);
 
@@ -155,24 +150,7 @@ public abstract class BaseDeviceSteps {
         device.setIntegrationType(IntegrationType.valueOf(integrationType));
 
         device = this.deviceRepository.save(device);
-
-        final String organizationIdentification = getString(settings, PlatformKeys.KEY_ORGANIZATION_IDENTIFICATION,
-                PlatformDefaults.DEFAULT_ORGANIZATION_IDENTIFICATION);
-        if (StringUtils.isNotBlank(organizationIdentification)
-                && !"null".equalsIgnoreCase(organizationIdentification)) {
-            final Organisation organization = this.organizationRepository
-                    .findByOrganisationIdentification(organizationIdentification);
-            final DeviceFunctionGroup functionGroup = getEnum(settings, PlatformKeys.KEY_DEVICE_FUNCTION_GROUP,
-                    DeviceFunctionGroup.class, DeviceFunctionGroup.OWNER);
-            final DeviceAuthorization authorization = device.addAuthorization(organization, functionGroup);
-            this.deviceAuthorizationRepository.save(authorization);
-            final Device savedDevice = this.deviceRepository.save(device);
-            ScenarioContext.current()
-                    .put(PlatformKeys.KEY_DEVICE_IDENTIFICATION, savedDevice.getDeviceIdentification());
-
-            device = savedDevice;
-        }
-
+        device = this.updateWithAuthorization(device, settings);
         this.addEanToDevice(device, settings);
 
         final String mastSegment = getString(settings, PlatformKeys.KEY_CDMA_MAST_SEGMENT,
@@ -185,6 +163,29 @@ public abstract class BaseDeviceSteps {
         device.updateCdmaSettings(cdmaSettings);
 
         return device;
+    }
+
+    private Device updateWithAuthorization(final Device device, final Map<String, String> settings) {
+        final String organizationIdentification = getString(settings, PlatformKeys.KEY_ORGANIZATION_IDENTIFICATION,
+                PlatformDefaults.DEFAULT_ORGANIZATION_IDENTIFICATION);
+        final Organisation organization = this.findOrganization(organizationIdentification);
+        if (organization == null) {
+            return device;
+        }
+        final DeviceFunctionGroup functionGroup = getEnum(settings, PlatformKeys.KEY_DEVICE_FUNCTION_GROUP,
+                DeviceFunctionGroup.class, DeviceFunctionGroup.OWNER);
+        final DeviceAuthorization authorization = device.addAuthorization(organization, functionGroup);
+        this.deviceAuthorizationRepository.save(authorization);
+        final Device savedDevice = this.deviceRepository.save(device);
+        ScenarioContext.current().put(PlatformKeys.KEY_DEVICE_IDENTIFICATION, savedDevice.getDeviceIdentification());
+        return savedDevice;
+    }
+
+    private Organisation findOrganization(final String organizationIdentification) {
+        if (StringUtils.isBlank(organizationIdentification)) {
+            return null;
+        }
+        return this.organizationRepository.findByOrganisationIdentification(organizationIdentification);
     }
 
     private void addEanToDevice(final Device device, final Map<String, String> settings) {

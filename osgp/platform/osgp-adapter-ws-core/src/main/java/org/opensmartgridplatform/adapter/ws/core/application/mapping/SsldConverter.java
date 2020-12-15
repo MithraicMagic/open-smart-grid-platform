@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+import javax.xml.datatype.XMLGregorianCalendar;
+
 import org.opensmartgridplatform.adapter.ws.schema.core.devicemanagement.Device;
 import org.opensmartgridplatform.adapter.ws.schema.core.devicemanagement.RelayType;
 import org.opensmartgridplatform.domain.core.entities.DeviceOutputSetting;
@@ -26,6 +28,7 @@ import ma.glasnost.orika.converter.BidirectionalConverter;
 import ma.glasnost.orika.metadata.Type;
 
 class SsldConverter extends BidirectionalConverter<Ssld, Device> {
+
     private final DeviceConverterHelper<Ssld> helper = new DeviceConverterHelper<>(Ssld.class);
 
     private final SsldRepository ssldRepository;
@@ -164,8 +167,9 @@ class SsldConverter extends BidirectionalConverter<Ssld, Device> {
             output.setLastKnownState(status.isLastKnownState());
             output.setLastSwitchingEventState(status.isLastSwitchingEventState());
             output.setLastSwitchingEventTime(
-                    this.helper.convertDateToXMLGregorianCalendar(status.getLastSwitchingEventTime()));
-            output.setLastKnownStateTime(this.helper.convertDateToXMLGregorianCalendar(status.getLastKnownStateTime()));
+                    this.mapperFacade.map(status.getLastSwitchingEventTime(), XMLGregorianCalendar.class));
+            output.setLastKnownStateTime(
+                    this.mapperFacade.map(status.getLastKnownStateTime(), XMLGregorianCalendar.class));
         }
         return output;
     }
