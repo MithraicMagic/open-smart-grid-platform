@@ -83,6 +83,10 @@
     <module>osgp/protocol-adapter-mqtt/osgp-protocol-adapter-mqtt</module>
     <module>osgp/protocol-adapter-mqtt/osgp-protocol-simulator-mqtt</module>
 
+    <!-- protocol-adapter-opc-ua -->
+    <module>osgp/protocol-adapter-opc-ua/parent-pa-opc-ua</module>
+    <module>osgp/protocol-adapter-opc-ua/osgp-protocol-adapter-opc-ua</module>
+
     <!-- platform -->
     <module>osgp/platform/parent-platform</module>
     <module>osgp/platform/osgp-domain-core</module>
