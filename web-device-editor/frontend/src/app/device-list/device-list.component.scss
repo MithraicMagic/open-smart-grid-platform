@@ -1,0 +1,66 @@
+@import '../../colors';
+
+.device-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  height: 100%;
+}
+
+.page-control {
+  user-select: none;
+  display: flex;
+  width: 20%;
+  align-items: center;
+  justify-content: space-evenly;
+
+  .button {
+    background-color: $highlight;
+    padding: .5rem 1rem;
+    color: $backgroundColor;
+    font-weight: bolder;
+    border-radius: 5px;
+    cursor: pointer;
+
+    &.disabled {
+      background-color: grey;
+      cursor: not-allowed;
+    }
+  }
+}
+
+.list {
+  width: 100%;
+  margin: .5rem;
+  border-collapse: collapse;
+
+  th {
+    text-align: left;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    border-bottom: darken($backgroundColor, 30%) solid 3px;
+  }
+
+  td, th {
+    padding: .4rem;
+  }
+
+  tr {
+    background: $backgroundColor;
+
+    &:nth-child(odd) {
+    background-color: darken($backgroundColor, 5%);
+    }
+  }
+
+  a {
+    color: $highlight;
+    &:visited {
+      color: $highlight;
+    }
+
+    &:hover {
+      color: darken($highlight, 20%);
+    }
+  }
+}

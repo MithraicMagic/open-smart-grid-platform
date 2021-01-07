@@ -133,6 +133,9 @@
     <!-- demo client application -->
     <module>public-lighting-demo-app/parent-os-webapps</module>
     <module>public-lighting-demo-app/web-demo-app</module>
+
+    <!-- GXF device editor -->
+    <module>web-device-editor/api</module>
   </modules>
 
   <distributionManagement>

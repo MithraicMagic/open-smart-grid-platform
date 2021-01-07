@@ -1,0 +1,34 @@
+<div class="device-list">
+  <table class="list">
+    <tr>
+      <th>Device Identification</th>
+      <th>Alias</th>
+      <th>Network Address</th>
+      <th>Last Successful Connection</th>
+      <th>Last Failed Connection</th>
+      <th>Failed Connection Count</th>
+      <th>Options</th>
+    </tr>
+    <tr *ngFor="let device of devices">
+      <td>{{device.deviceIdentification}}</td>
+      <td>{{device.alias}}</td>
+      <td>{{device.networkAddress}}</td>
+      <td>{{device.lastSuccessfulConnectionTimestamp}}</td>
+      <td>{{device.lastFailedConnectionTimestamp}}</td>
+      <td>{{device.failedConnectionCount}}</td>
+      <td>
+        <a routerLink="/device/{{device.deviceIdentification}}">Manage...</a>
+      </td>
+    </tr>
+  </table>
+  <div class="page-control">
+    <button type="button" (click)="prevPage()" class="btn btn-primary" [disabled]="!hasPrevPage()">
+      <<
+    </button>
+    {{pageNumber + 1}}/{{totalPages}}
+    <button type="button" (click)="nextPage()" class="btn btn-primary" [disabled]="!hasNextPage()">
+      >>
+    </button>
+  </div>
+</div>
+
