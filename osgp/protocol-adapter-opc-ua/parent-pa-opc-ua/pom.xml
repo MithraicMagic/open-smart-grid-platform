@@ -9,10 +9,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>parent-pa-mqtt</artifactId>
+  <artifactId>parent-pa-opc-ua</artifactId>
   <packaging>pom</packaging>
-  <name>parent-pa-mqtt</name>
-  <description>Parent module for MQTT protocol adapter</description>
+  <name>parent-pa-opc-ua</name>
+  <description>Parent module for OPC UA protocol adapter</description>
 
   <properties>
     <jgitflow-maven-plugin.version>1.0-m5.1</jgitflow-maven-plugin.version>
@@ -27,8 +27,9 @@
 
   <distributionManagement>
     <site>
-      <id>pa-mqtt</id>
-      <name>pa-mqtt</name>
+      <id>pa-opc-ua</id>
+      <name>pa-opc-ua</name>
+      <!--suppress UnresolvedMavenProperty -->
       <url>${maven.site.distributionManagement.site.url}</url>
     </site>
   </distributionManagement>
@@ -87,6 +88,7 @@
           <artifactId>license-maven-plugin</artifactId>
           <version>${license.maven.plugin}</version>
           <configuration>
+            <!--suppress UnresolvedMavenProperty -->
             <header>${license.maven.plugin.location}</header>
             <properties>
               <owner>Mycila</owner>
@@ -133,7 +135,7 @@
         <version>${maven.project.info.reports.plugin.version}</version>
         <configuration>
           <dependencyDetailsEnabled>false</dependencyDetailsEnabled>
-          <dependencyLocationsEnabled>false</dependencyLocationsEnabled>
+<!--          <dependencyLocationsEnabled>false</dependencyLocationsEnabled>-->
         </configuration>
       </plugin>
       <plugin>
