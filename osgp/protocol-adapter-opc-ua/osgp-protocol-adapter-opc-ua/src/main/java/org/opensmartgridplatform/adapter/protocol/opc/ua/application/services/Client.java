@@ -18,10 +18,14 @@ import org.slf4j.LoggerFactory;
 
 public class Client {
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
-    
+    private final String endPointUrl;
+
+    public Client(final String url) {
+        this.endPointUrl = url;
+    }
+
     public String getEndpointUrl() {
-        //return "opc.tcp://localhost:12686/milo";
-        return "opc.tcp://milo.digitalpetri.com:62541/milo";
+        return this.endPointUrl;
     }
 
     public Predicate<EndpointDescription> endpointFilter() {
@@ -41,8 +45,8 @@ public class Client {
         client.connect().get();
 
         // start browsing at root folder
+        //this.browseNode("", client, Identifiers.BrowseDescription);
         this.browseNode("", client, Identifiers.RootFolder);
-
         future.complete(client);
     }
 

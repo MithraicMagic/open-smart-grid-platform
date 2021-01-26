@@ -18,16 +18,18 @@ import org.slf4j.LoggerFactory;
 
 public class ClientRunner {
     //todo create client method that creates a client with given settings
-    private final Client client = new Client();
+    private Client client;
+    private OpcUaClient runningClient;
 
     private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
     private final CompletableFuture<OpcUaClient> future = new CompletableFuture<>();
     private ExampleServer exampleServer;
 
-    public void onConnect(final boolean serverRequired) {
+    public void tryConnect(final String url) {
         try {
-            final OpcUaClient runningClient = this.createClient();
+            this.client = new Client(url);
+            this.runningClient = this.createClient();
 
             this.future.whenCompleteAsync((c, ex) -> {
                 if (ex != null) {
@@ -35,10 +37,7 @@ public class ClientRunner {
                 }
 
                 try {
-                    runningClient.disconnect().get();
-                    if (serverRequired && this.exampleServer != null) {
-                        this.exampleServer.shutdown().get();
-                    }
+                    this.runningClient.disconnect().get();
                     Stack.releaseSharedResources();
                 } catch (final InterruptedException | ExecutionException e) {
                     this.logger.error("Error disconnecting: {}", e.getMessage(), e);
@@ -52,13 +51,6 @@ public class ClientRunner {
                 }
             });
 
-            try {
-                this.client.run(runningClient, this.future);
-                this.future.get(15, TimeUnit.SECONDS);
-            } catch (final Throwable t) {
-                this.logger.error("Error running client example: {}", t.getMessage(), t);
-                this.future.completeExceptionally(t);
-            }
         } catch (final Throwable t) {
             this.logger.error("Error getting client: {}", t.getMessage(), t);
 
@@ -71,12 +63,21 @@ public class ClientRunner {
                 e.printStackTrace();
             }
         }
+    }
 
+    public void runMethod() {
         try {
-            Thread.sleep(999_999_999);
-        } catch (final InterruptedException e) {
-            e.printStackTrace();
+            this.client.run(this.runningClient, this.future);
+            this.future.get(15, TimeUnit.SECONDS);
+        } catch (final Throwable t) {
+            this.logger.error("Error running client example: {}", t.getMessage(), t);
+            this.future.completeExceptionally(t);
         }
+    }
+
+    public void closeConnection() {
+        this.runningClient.disconnect();
+        Stack.releaseSharedResources();
     }
 
     private OpcUaClient createClient() throws Exception {

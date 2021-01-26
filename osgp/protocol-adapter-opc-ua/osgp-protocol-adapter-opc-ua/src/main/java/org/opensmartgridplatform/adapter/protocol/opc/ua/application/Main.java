@@ -4,6 +4,9 @@ import org.opensmartgridplatform.adapter.protocol.opc.ua.application.services.Cl
 
 class Main {
     public static void main(final String[] args) {
-        new ClientRunner().onConnect(false);
+        final ClientRunner clientRunner = new ClientRunner();
+        clientRunner.tryConnect("opc.tcp://milo.digitalpetri.com:62541/milo");
+        clientRunner.runMethod();
+        clientRunner.closeConnection();
     }
 }
