@@ -1,0 +1,43 @@
+<div id="response"></div>
+<form [formGroup]="form">
+  <div class="row">
+    <label for="deviceLifecycleStatus">Device Lifecycle Status:</label>
+    <select id="deviceLifecycleStatus" formControlName="deviceLifecycleStatus">
+      <option value="" selected disabled hidden>Lifecycle Status...</option>
+<!--      [selected]="device?.deviceLifecycleStatus === lifecycleStatus"-->
+      <option
+              *ngFor="let lifecycleStatus of deviceLifecycleStatuses"
+              value="{{lifecycleStatus}}">{{lifecycleStatus}}</option>
+    </select>
+  </div>
+  <div class="row">
+    <label for="lastSuccessfulConnectionTimestamp">Last Successful Connection Timestamp:
+      ({{device?.lastSuccessfulConnectionTimestamp | date: 'yyyy-MM-dd'}})</label>
+    <input id="lastSuccessfulConnectionTimestamp" type="number" formControlName="lastSuccessfulConnectionTimestamp">
+  </div>
+  <div class="row">
+    <label for="lastFailedConnectionTimestamp">Last Failed Connection Timestamp:
+      ({{device?.lastFailedConnectionTimestamp | date: 'yyyy-MM-dd'}})</label>
+    <input id="lastFailedConnectionTimestamp" type="number" formControlName="lastFailedConnectionTimestamp">
+  </div>
+  <div class="row">
+    <label for="failedConnectionCount">Failed Connection Count:</label>
+    <input id="failedConnectionCount" type="number" formControlName="failedConnectionCount">
+  </div>
+  <div class="row">
+    <label for="inMaintenance">Maintenance</label>
+    <input id="inMaintenance" type="checkbox" formControlName="inMaintenance">
+  </div>
+  <div class="row">
+    <label for="activated">Activated</label>
+    <input id="activated" type="checkbox" formControlName="activated">
+  </div>
+  <div class="form-actions">
+    <a routerLink="/" class="btn btn-primary">
+      Cancel
+    </a>
+    <button [disabled]="form.pristine" class="btn btn-secondary" (click)="onSave()">
+      Save Status
+    </button>
+  </div>
+</form>

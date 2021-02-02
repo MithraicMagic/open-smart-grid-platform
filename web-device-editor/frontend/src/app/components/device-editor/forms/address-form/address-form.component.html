@@ -1,0 +1,34 @@
+<form [formGroup]="form">
+  <div class="row">
+    <label for="municipality">Municipality:</label>
+    <input id="municipality" type="text" formControlName="municipality">
+  </div>
+  <div class="row">
+    <label for="city">City:</label>
+    <input id="city" type="text" formControlName="city">
+  </div>
+  <div class="row">
+    <label for="street">Street:</label>
+    <input id="street" type="text" formControlName="street">
+  </div>
+  <div class="row">
+    <label for="postalCode">Postal Code:</label>
+    <input id="postalCode" type="text" formControlName="postalCode">
+  </div>
+  <div class="row">
+    <label for="number">Number:</label>
+    <input id="number" type="text" formControlName="number">
+  </div>
+  <div class="row">
+    <label for="numberAddition">Number Addition:</label>
+    <input id="numberAddition" formControlName="numberAddition">
+  </div>
+  <div class="form-actions">
+    <a routerLink="/" class="btn btn-primary">
+      Cancel
+    </a>
+    <button [disabled]="form.pristine" class="btn btn-secondary" (click)="onSave()">
+      Save Address
+    </button>
+  </div>
+</form>

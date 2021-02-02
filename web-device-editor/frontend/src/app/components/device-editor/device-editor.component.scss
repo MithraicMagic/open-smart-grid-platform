@@ -1,0 +1,59 @@
+@import 'src/shared/colors';
+
+.tab-window {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  width: 100%;
+
+  .tab-selector {
+    display: flex;
+    width: 100%;
+    height: 50px;
+    margin-bottom: 10px;
+    font-weight: bolder;
+    background-color: $darkGreen;
+    color: $background;
+
+    .tab-item {
+      transition: 500ms;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100%;
+      flex-grow: 1;
+      cursor: pointer;
+
+      &.active {
+        background-color: $lightGreen;
+        cursor: default;
+      }
+
+      &:hover {
+        transition: 500ms;
+        background-color: $lightGreen;
+      }
+    }
+  }
+
+  .tab-content {
+    width: 95%;
+    height: calc(100% - 60px);
+  }
+}
+
+
+#response {
+  width: 100%;
+  padding: 5px;
+}
+
+.success {
+  background-color: greenyellow;
+  border: solid 2px green;
+}
+
+.error {
+  background-color: red;
+  border: solid 2px darkred;
+}

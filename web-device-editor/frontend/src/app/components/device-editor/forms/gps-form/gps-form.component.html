@@ -1,0 +1,19 @@
+<div id="response"></div>
+<form [formGroup]="form">
+  <div class="row">
+    <label for="latitude">Latitude:</label>
+    <input id="latitude" type="number" formControlName="latitude">
+  </div>
+  <div class="row">
+    <label for="longitude">Longitude:</label>
+    <input id="longitude" type="number" formControlName="longitude">
+  </div>
+  <div class="form-actions">
+    <a routerLink="/" class="btn btn-primary">
+      Cancel
+    </a>
+    <button [disabled]="form.pristine" class="btn btn-secondary" (click)="onSave()">
+      Save GPS Coordinates
+    </button>
+  </div>
+</form>

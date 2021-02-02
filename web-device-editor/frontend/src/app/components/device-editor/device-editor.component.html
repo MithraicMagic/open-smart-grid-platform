@@ -1,0 +1,31 @@
+<div class="tab-window">
+  <div class="tab-selector">
+    <div (click)="selectTab(0)" [class.active]="selectedTabIndex === 0" class="tab-item">
+      General
+    </div>
+    <div (click)="selectTab(1)" [class.active]="selectedTabIndex === 1" class="tab-item">
+      Address
+    </div>
+    <div (click)="selectTab(2)" [class.active]="selectedTabIndex === 2" class="tab-item">
+      GPS
+    </div>
+<!--    <div (click)="selectTab(3)" [class.active]="selectedTabIndex === 3" class="tab-item">-->
+<!--      Authorizations-->
+<!--    </div>-->
+    <div (click)="selectTab(4)" [class.active]="selectedTabIndex === 4" class="tab-item">
+      CDMA
+    </div>
+    <div (click)="selectTab(5)" [class.active]="selectedTabIndex === 5" class="tab-item">
+      Status
+    </div>
+  </div>
+  <div class="tab-content">
+    <div id="response"></div>
+    <app-generic-form [hidden]="selectedTabIndex !== 0" [device]="device"></app-generic-form>
+    <app-address-form [hidden]="selectedTabIndex !== 1" [device]="device"></app-address-form>
+    <app-gps-form [hidden]="selectedTabIndex !== 2" [device]="device"></app-gps-form>
+    <app-authorization-form [hidden]="selectedTabIndex !== 3" [device]="device"></app-authorization-form>
+    <app-cdma-form [hidden]="selectedTabIndex !== 4" [device]="device"></app-cdma-form>
+    <app-status-form [hidden]="selectedTabIndex !== 5" [device]="device"></app-status-form>
+  </div>
+</div>

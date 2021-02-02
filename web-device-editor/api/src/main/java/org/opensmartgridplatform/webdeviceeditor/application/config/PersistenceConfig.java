@@ -11,8 +11,10 @@ import org.flywaydb.core.api.MigrationVersion;
 import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.opensmartgridplatform.domain.core.entities.Device;
 import org.opensmartgridplatform.domain.core.entities.Organisation;
+import org.opensmartgridplatform.domain.core.entities.ProtocolInfo;
 import org.opensmartgridplatform.domain.core.repositories.DeviceRepository;
 import org.opensmartgridplatform.domain.core.repositories.OrganisationRepository;
+import org.opensmartgridplatform.domain.core.repositories.ProtocolInfoRepository;
 import org.opensmartgridplatform.shared.application.config.AbstractPersistenceConfig;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
@@ -26,11 +28,12 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
-@EnableJpaRepositories(basePackageClasses = { DeviceRepository.class, OrganisationRepository.class })
+@EnableJpaRepositories(basePackageClasses = { DeviceRepository.class, OrganisationRepository.class,
+        ProtocolInfoRepository.class })
 @EnableTransactionManagement
 @PropertySource(value = "classpath:web-device-editor.properties")
 @PropertySource(value = "file:${osgp/Global/config}", ignoreResourceNotFound = true)
-@EntityScan(basePackageClasses = { Device.class, Organisation.class })
+@EntityScan(basePackageClasses = { Device.class, Organisation.class, ProtocolInfo.class })
 public class PersistenceConfig extends AbstractPersistenceConfig {
     @Value("${db.driver}")
     private String driver;
@@ -137,7 +140,8 @@ public class PersistenceConfig extends AbstractPersistenceConfig {
     @Bean
     @DependsOn("flyway")
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
-        final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+        final LocalContainerEntityManagerFactoryBean entityManagerFactoryBean =
+                new LocalContainerEntityManagerFactoryBean();
 
         entityManagerFactoryBean.setPersistenceUnitName("WEB_DEVICE_EDITOR");
         entityManagerFactoryBean.setDataSource(this.getDataSource());

@@ -1,0 +1,32 @@
+@import 'src/shared/btn';
+
+.row {
+  display: flex;
+  flex-wrap: wrap;
+  width: 100%;
+  margin: 10px 0;
+
+  label {
+    display: flex;
+    align-items: center;
+    min-width: fit-content;
+    width: 30%;
+  }
+
+  select, input {
+    padding: 5px;
+    flex-grow: 1;
+  }
+}
+
+.form-actions {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+
+  .btn {
+    margin: 10px;
+    width: 20%;
+    min-width: 100px;
+  }
+}

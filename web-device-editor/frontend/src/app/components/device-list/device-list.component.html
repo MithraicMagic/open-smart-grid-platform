@@ -1,0 +1,29 @@
+<div class="device-list-page" *ngIf="devices">
+  <div class="device-list">
+      <div class="head row">
+        <span>Device Identification</span>
+        <span>Alias</span>
+        <span>Network Address</span>
+        <span>Last Successful Connection</span>
+        <span>Last Failed Connection</span>
+      </div>
+      <div class="row" *ngFor="let device of devices">
+        <span><a routerLink="/device/{{device.deviceIdentification}}">{{device.deviceIdentification}}</a></span>
+        <span>{{device.alias}}</span>
+        <span>{{device.networkAddress}}</span>
+        <span>{{device.lastSuccessfulConnectionTimestamp | date: 'yyyy-MM-dd'}}</span>
+        <span>{{device.lastFailedConnectionTimestamp | date: 'yyyy-MM-dd'}}</span>
+      </div>
+  </div>
+
+  <div class="page-control">
+    <button type="button" (click)="prevPage()" class="btn btn-primary" [disabled]="!hasPrevPage()">
+      <<
+    </button>
+    {{pageNumber + 1}}/{{totalPages}}
+    <button type="button" (click)="nextPage()" class="btn btn-primary" [disabled]="!hasNextPage()">
+      >>
+    </button>
+  </div>
+</div>
+<h1 *ngIf="devices === undefined">No devices found</h1>

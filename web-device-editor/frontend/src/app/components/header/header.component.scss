@@ -1,0 +1,17 @@
+@import 'src/shared/colors';
+
+nav {
+  display: flex;
+  color: $background;
+  height: 7vh;
+  align-items: center;
+  background-color: $darkBlue;
+
+  .item {
+    height: 80%;
+    margin: 0 5px;
+    img {
+      height: 100%;
+    }
+  }
+}

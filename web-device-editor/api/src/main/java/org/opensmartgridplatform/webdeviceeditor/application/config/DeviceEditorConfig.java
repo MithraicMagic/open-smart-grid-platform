@@ -1,8 +1,5 @@
 package org.opensmartgridplatform.webdeviceeditor.application.config;
 
-import ma.glasnost.orika.MapperFacade;
-import ma.glasnost.orika.MapperFactory;
-import ma.glasnost.orika.impl.DefaultMapperFactory;
 import org.opensmartgridplatform.domain.core.entities.Organisation;
 import org.opensmartgridplatform.domain.core.exceptions.UnknownEntityException;
 import org.opensmartgridplatform.domain.core.repositories.OrganisationRepository;
@@ -37,14 +34,5 @@ public class DeviceEditorConfig {
             throw new UnknownEntityException(Organisation.class, this.organisationIdentification);
         }
         return organisation;
-    }
-
-    @Bean
-    public MapperFacade deviceEditorMapperFacade() {
-        final MapperFactory factory = new DefaultMapperFactory.Builder().build();
-        factory.classMap(org.opensmartgridplatform.domain.core.entities.Device.class,
-                org.opensmartgridplatform.webdeviceeditor.domain.entities.Device.class).byDefault().register();
-
-        return factory.getMapperFacade();
     }
 }

@@ -1,0 +1,59 @@
+<div id="response"></div>
+<form [formGroup]="form">
+  <div class="row">
+    <label for="deviceIdentification">Device Identification:</label>
+    <input id="deviceIdentification" type="text" formControlName="deviceIdentification">
+  </div>
+  <div class="row">
+    <label for="alias">Alias:</label>
+    <input id="alias" type="text" formControlName="alias">
+  </div>
+  <div class="row">
+    <label for="deviceType">Device Type:</label>
+    <input id="deviceType" type="text" formControlName="deviceType">
+  </div>
+  <div class="row">
+    <label for="networkAddress">Network Address:</label>
+    <input id="networkAddress" type="text" formControlName="networkAddress">
+  </div>
+  <div class="row">
+    <label for="protocolInfo">Protocol Info:</label>
+    <select id="protocolInfo" (change)="onProtocolInfoSelect($event)" formControlName="protocolInfo">
+      <option value="" selected disabled hidden>Protocol Info...</option>
+<!--      [selected]="(!hasComplexPropertyChanged('protocolInfo', protocolInfo) && protocolInfo.id === device?.protocolInfo) || complexTypeChanges?.protocolInfo?.id === protocolInfo.id"-->
+      <option
+        [selected]="protocolInfo.id === device?.protocolInfo"
+        *ngFor="let protocolInfo of protocolInfos" [value]="protocolInfo.id">{{protocolInfo.protocol}}
+        ({{protocolInfo.protocolVersion}})
+      </option>
+    </select>
+  </div>
+  <div class="row">
+    <label for="gatewayDevice">Gateway Device:</label>
+    <select id="gatewayDevice" formControlName="gatewayDevice">
+      <option value="" selected disabled hidden>Gateway Device...</option>
+    </select>
+  </div>
+  <div class="row">
+    <label for="deviceModel">Device Model:</label>
+    <select id="deviceModel" formControlName="deviceModel">
+      <option value="" selected disabled hidden>Model...</option>
+    </select>
+  </div>
+  <div class="row">
+    <label for="integrationType">Integration Type:</label>
+    <select id="integrationType" formControlName="integrationType">
+      <option value="" selected disabled hidden>Integration Type...</option>
+      <option [selected]="device?.integrationType === integrationType" *ngFor="let integrationType of integrationTypes"
+              value="{{integrationType}}">{{integrationType}}</option>
+    </select>
+  </div>
+  <div class="form-actions">
+    <a routerLink="/" class="btn btn-primary">
+      Cancel
+    </a>
+    <button [disabled]="form.pristine" class="btn btn-secondary" (click)="onSave()">
+      Save General Settings
+    </button>
+  </div>
+</form>

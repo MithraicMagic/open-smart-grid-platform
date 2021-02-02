@@ -1,0 +1,19 @@
+<div id="response"></div>
+<form [formGroup]="form">
+  <div class="row">
+    <label for="mastSegmentInput">Mast Segment:</label>
+    <input id="mastSegmentInput" type="text" formControlName="mastSegmentInput">
+  </div>
+  <div class="row">
+    <label for="batchNumberInput">Batch Number:</label>
+    <input id="batchNumberInput" type="number" formControlName="batchNumberInput">
+  </div>
+  <div class="form-actions">
+    <a routerLink="/" class="btn btn-primary">
+      Cancel
+    </a>
+    <button [disabled]="form.pristine" class="btn btn-secondary" (click)="onSave()">
+      Save CDMA Settings
+    </button>
+  </div>
+</form>

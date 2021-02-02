@@ -1,0 +1,61 @@
+@import 'src/shared/colors';
+@import 'src/shared/btn';
+
+.device-list-page {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.title {
+  width: fit-content;
+  padding: 10px 0;
+}
+
+.device-list {
+  display: flex;
+  width: 100%;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  .row{
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: space-evenly;
+    padding: 5px;
+    width: 100%;
+
+    &.head {
+      font-weight: bolder;
+      border-bottom: $darkBlue solid 2px;
+    }
+
+    &.row:nth-child(odd) {
+      background-color: darken($background, 10%);
+    }
+
+    span {
+      flex: 0 0 20%;
+    }
+  }
+}
+
+.page-control {
+  user-select: none;
+  display: flex;
+  width: 20%;
+  margin: 10px 0;
+  align-items: center;
+  justify-content: space-evenly;
+}
+
+a {
+  color: $lightBlue;
+  &:visited {
+    color: $lightBlue;
+  }
+
+  &:hover {
+    color: $darkBlue;
+  }
+}
